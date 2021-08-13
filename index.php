@@ -22,8 +22,9 @@
                     <h1 class="h4 text-gray-900 mb-4">SMS Login!</h1>
                   </div>
 
+                  
                   <form class="user" method ="POST" action = "process/login.php">
-
+                  <?php  flash(); ?>
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" name="email" required id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
