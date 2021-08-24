@@ -49,4 +49,16 @@ function flash(){
         unset($_SESSION['warning']);
     }
 }
+
+function generateRandomString($length = 100){
+    $chars ="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $str_length = strlen($chars);
+    $random = "";
+    for($i=0; $i<=$length; $i++){
+        $random_posn = rand(0,$str_length-1); //0,61 i.e min & max
+        $char =  $chars[$random_posn];
+        $random .= $char;
+    }
+    return $random;
+}
 ?>

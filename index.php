@@ -1,6 +1,14 @@
 <?php
      require_once "config/init.php";
      require_once "inc/header.php";
+
+     if(isset($_SESSION, $_SESSION["token"]) && !empty($_SESSION["token"])){
+          redirect("dashboard.php","success","You are already logged in.");
+     }
+
+     if(isset($_COOKIE, $_COOKIE["_au"]) && !empty($_COOKIE["_au"])){
+      redirect("dashboard.php","success","Welcome back to admin panel.");
+ }
 ?>
 
 

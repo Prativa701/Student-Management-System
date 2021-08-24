@@ -109,5 +109,132 @@ abstract class Database{
         }
 
     }
+
+
+    final protected function update($data = array(), $attr = array(),$is_debug = false){
+        try{
+               /**UPDATE <table> 
+                    SET column_name = :_column_name,
+                    <column_name_n> = :_column_name_n
+                    WHERE
+                    <column_name> =
+                    **/
+   
+               $this->sql = 'UPDATE ';
+   
+                   if(!isset($this->table) || empty($this->table)){
+                       throw new Exception("Table not set.");
+                   }
+   
+                   $this->sql .= $this->table." SET ";
+   
+               //DATA OPERATION HERE
+               if(isset($data) && !empty($data)){
+                if(is_string($data)){
+                    $this->sql .= $data;
+                }else{
+                    $temp = array();
+
+                    foreach($data as $column_name => $value){
+                        $str = $column_name." = :_".$column_name;
+                        $temp[] = $str;
+                    }
+                    $this->sql .=implode(" , ", $temp);
+                }
+            }else{
+                throw new Exception("Data not set for update");
+            }
+   
+               //WHERE OPERATION
+                   if(isset($attr['where']) && !empty($attr['where'])){
+                       if(is_string($attr['where'])){
+                           $this->sql .= " WHERE " .$attr['where'];
+                       }else{
+                           $temp = array();
+                           foreach($attr['where'] as $column_name => $value){
+                               $str = $column_name." = :".$column_name;
+                               $temp[] = $str;
+                           }
+                           $this->sql .= " WHERE ".implode(" AND ",$temp);
+                       }
+                   }
+   
+   
+               if($is_debug){
+                   debug($attr);
+                   debug($this->sql, true);
+               }
+   
+               //after placing every data in sql convert into prepared statement
+                   $this->stmt = $this->conn->prepare($this->sql); //pass the sql
+
+                   if(isset($data) && !empty($data) && is_array($data)){
+                    //if data is not empty and is array type, create loop
+                    foreach($data as $column_name=>$value){
+                        if(is_int($value)){
+                            $param = PDO::PARAM_INT;
+                        }else if(is_bool($value)){
+                            $param = PDO::PARAM_BOOL;
+                        }else{
+                            $param = PDO::PARAM_STR;
+                        }
+
+                        if($param){
+                            $this->stmt->bindvalue(":_".$column_name, $value, $param); // :key,value,datatype
+                        }
+                    }
+                }
+
+   
+                   if(isset($attr['where']) && !empty($attr['where']) && is_array($attr['where'])){
+                       //bind your email value in :column_name , create loop
+                       foreach($attr['where'] as $column_name=>$value){
+                           if(is_int($value)){
+                               $param = PDO::PARAM_INT;
+                           }else if(is_bool($value)){
+                               $param = PDO::PARAM_BOOL;
+                           }else{
+                               $param = PDO::PARAM_STR;
+                           }
+   
+                           if($param){
+                               $this->stmt->bindvalue(":".$column_name, $value, $param); // :key,value,datatype
+                           }
+                       }
+                   }
+   
+                   return $this->stmt->execute(); //after ps op. performed execute
+                   
+   
+           }catch(PDOException $e){
+               //2021-07-24 10:31 AM: Connection(PDO), Error establishing error connection
+               //2021/../.. next line display
+               $msg = date('Y-m-d h:i:s A: ')."Update(PDO), ".$e->getMessage()."\r\n";
+               error_log($msg,3,ERROR_LOG); //errormsg,msgtype,pathtostore
+           }catch(Exception $e){
+               $msg = date('Y-m-d h:i:s A: ')."Update(General), ".$e->getMessage()."\r\n";
+               error_log($msg,3,ERROR_LOG); //errormsg,msgtype,pathtostore
+           }
+   
+       }
+
+
+    final protected function runRaw($is_debug= false){
+        try{
+            if($is_debug){
+                debug($this->sql,true);
+            }
+
+            $this->stmt = $this->conn->prepare($this->sql);
+            return $this->stmt->execute();
+
+        }catch(PDOException $e){
+            $msg = date("Y-m-d h:i:s A: ")."Run Raw(PDO), ".$e->getMessage()."\r\n";
+            error_log($msg,3,ERROR_LOG);
+        }catch(Exception $e){
+            $msg = date("Y-m-d h:i:s A: ")."Run Raw(General), ".$e->getMessage()."\r\n";
+            error_log($msg,3,ERROR_LOG);
+        }
+    }
 }
 ?>

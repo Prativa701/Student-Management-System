@@ -1,6 +1,12 @@
 <?php
-  require_once "config/init.php";
+  require_once "./config/init.php";
+
+  require_once "./inc/checklogin.php";
+
   require_once "inc/header.php";
+
+ // debug($_SESSION);
+ 
 ?>
 
   <!-- Page Wrapper -->
@@ -314,6 +320,8 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+
+          <?php echo flash(); ?>
 
         </div>
         <!-- /.container-fluid -->
