@@ -61,4 +61,11 @@ function generateRandomString($length = 100){
     }
     return $random;
 }
+
+function sanitize($str){      //returns plain text
+   // $str = strip_tags($str); //<p>pratee</p> in asdf => pratee
+   // $str = rtrim($str);      //rtrim() removes spaces from string
+   // return $str;
+      return htmlentities(rtrim(strip_tags($str)));
+}
 ?>

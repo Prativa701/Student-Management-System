@@ -20,6 +20,15 @@
            return $this->select($attr);
         }
 
+        public function getUserByCookie($cookie){
+            $attr = array(
+                'where' => array(
+                    'remember_token' => $cookie
+                )
+            );
+            return $this->select($attr);
+        }
+
         
 
         public function updateUserRaw($user_data,$id){
