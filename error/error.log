@@ -88,3 +88,7 @@
 2021-08-28 12:17:37 AM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
 2021-08-28 12:17:43 AM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
 2021-08-28 12:17:43 AM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
+2021-08-28 12:16:24 PM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
+2021-08-28 12:16:28 PM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
+2021-08-28 12:18:58 PM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'
+2021-08-28 12:19:10 PM: Connection(PDO), SQLSTATE[42000]: Syntax error or access violation: 1115 Unknown character set: 'utf'

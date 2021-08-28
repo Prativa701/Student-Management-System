@@ -20,3 +20,9 @@ define("ASSETS_URL", SITE_URL."/assets");
 define("CSS_URL", ASSETS_URL."/css");
 define ("JS_URL", ASSETS_URL."/js");
 define ("IMAGES_URL",ASSETS_URL."/img");
+
+define("PLUGINS_PATH",$_SERVER['DOCUMENT_ROOT']."/plugins");
+
+define("SMTP_HOST","smtp.sendgrid.net");
+define("SMTP_USER","apikey");
+define("SMTP_KEY","");
