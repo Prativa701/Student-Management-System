@@ -6,7 +6,7 @@ $user = new User; //email adress is present in db or not verify first
 
 if(isset($_POST) && !empty($_POST)){
     $user_email = filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
-    if(!user_email){
+    if(!$user_email){
         redirect("../forgotpassword.php","error","Invalid Email Format.");
     }
 
@@ -21,7 +21,19 @@ if(isset($_POST) && !empty($_POST)){
     );
     $status = $user->updateById($data,$user_info[0]->id);
     //Send Email to Registered User
-    sendEmail();
+    $msg = "<strong>Dear ".$user_info[0]->name.",</strong><br/>";
+    $msg .= "<p>You have requested for password reset.Please click the link below to reset your password,or copy paste the link in the browser.</p>";
+    $msg .= "<a href='".SITE_URL."/reset-password.php?token=".$token."'>".SITE_URL."/reset-password.php?token=".$token."</a><br/>";
+    $msg .= "Regards,<br/>";
+    $msg .= "System SMS 730";
+
+    $status = sendEmail($user_info[0]->email,"Password Reset Request",$msg);
+    if($status){
+       redirect("../","success","Check your email for password reset.");
+    }else{
+        redirect("../forgotpassword.php","error","Could not send email at this moment,contact our administration");
+    }
+    //debug($status,true);
 
 }else{
     redirect("../forgotpassword.php","error","Please provide your username");

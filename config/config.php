@@ -23,6 +23,6 @@ define ("IMAGES_URL",ASSETS_URL."/img");
 
 define("PLUGINS_PATH",$_SERVER['DOCUMENT_ROOT']."/plugins");
 
-define("SMTP_HOST","smtp.sendgrid.net");
-define("SMTP_USER","apikey");
-define("SMTP_KEY","");
+define("SMTP_HOST","smtp.mailtrap.io");
+define("SMTP_USER","586fb1cdf64dab");
+define("SMTP_KEY","e22b7a896101f2");

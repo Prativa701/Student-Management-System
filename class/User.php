@@ -29,6 +29,15 @@
             return $this->select($attr);
         }
 
+        public function getUserFromForgetToken($token){
+            $attr = array(
+                'where' => array(
+                    'forget_token' => $token
+                )
+            );
+            return $this->select($attr);
+        }
+
         
 
         public function updateUserRaw($user_data,$id){
